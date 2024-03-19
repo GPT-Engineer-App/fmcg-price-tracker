@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Table, Thead, Tbody, Tr, Th, Td, VStack, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Heading, VStack, Text, useColorModeValue } from "@chakra-ui/react";
 import { FaChartLine } from "react-icons/fa";
 
 // Dummy data to simulate prices over time for different retailers
@@ -45,28 +45,16 @@ const Index = () => {
         <Text fontSize="lg" fontWeight="semibold" mb={4}>
           Product Price Over Time
         </Text>
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>Retailer</Th>
-              <Th isNumeric>Jan Price</Th>
-              <Th isNumeric>Feb Price</Th>
-              <Th isNumeric>Mar Price</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {productData.map((data) => (
-              <Tr key={data.retailer}>
-                <Td>{data.retailer}</Td>
-                {data.prices.map((price) => (
-                  <Td isNumeric key={price.date}>
-                    ${price.price.toFixed(2)}
-                  </Td>
-                ))}
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
+        <Box width="full" height="300px" position="relative">
+          {productData.map((retailerData, index) => (
+            <Flex key={index} direction="column" position="absolute" left={`${index * 100 + 50}px`} height="100%" alignItems="center">
+              {retailerData.prices.map((price, priceIndex) => (
+                <Box key={priceIndex} height={`${price.price * 10}px`} width="2px" bg="blue.500" mb="1px" />
+              ))}
+              <Text fontSize="xs">{retailerData.retailer}</Text>
+            </Flex>
+          ))}
+        </Box>
       </Box>
     </VStack>
   );
